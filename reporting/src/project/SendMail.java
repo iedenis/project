@@ -85,6 +85,4 @@ public class SendMail {
 			e.printStackTrace();
 		}
 	}
-
-
 }

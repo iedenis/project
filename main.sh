@@ -8,11 +8,11 @@ do
 line=$(alpr -c eu ${NEWFILE} -n 1)
 stringArray=($line)
 
-echo "LOG: The first line is $line"
+#echo "LOG: The first line is $line"
 echo "LOG: The plate number is ${stringArray[4]}"
 
 re='^[0-9]+$'
-if ! [[ ${stringArray[4]} =~ $re ]]; then echo "Didn't detect the number from the photo"
+if ! [[ ${stringArray[4]} =~ $re ]]; then echo "Couldn't detect the number from the photo"
 
 else
 echo
@@ -20,7 +20,6 @@ echo
 if ! [ $? -eq 0 ]; then 
 echo "LOG: returned value $?"
 cd /home/fox/Project/ && java -jar report.jar ${NEWFILE}
-echo "success!!!"
 fi
 fi
 done
