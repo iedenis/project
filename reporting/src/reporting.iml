@@ -10,7 +10,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../javamail-1.4.5/mail.jar!/" />
+          <root url="jar://$MODULE_DIR$/../itext/itextpdf-5.5.9.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -19,10 +19,21 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../itext/itextpdf-5.5.9.jar!/" />
+          <root url="file://$MODULE_DIR$/../javamail-1.4.5" />
         </CLASSES>
-        <JAVADOC />
-        <SOURCES />
+        <JAVADOC>
+          <root url="file://$MODULE_DIR$/../javamail-1.4.5/docs/javadocs" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../javamail-1.4.5/demo" />
+          <root url="file://$MODULE_DIR$/../javamail-1.4.5/demo/client" />
+          <root url="file://$MODULE_DIR$/../javamail-1.4.5/demo/logging" />
+          <root url="file://$MODULE_DIR$/../javamail-1.4.5/demo/outlook" />
+          <root url="file://$MODULE_DIR$/../javamail-1.4.5/demo/servlet" />
+          <root url="file://$MODULE_DIR$/../javamail-1.4.5/demo/webapp/src/classes" />
+          <root url="file://$MODULE_DIR$/../javamail-1.4.5/demo/webapp/src/taglib" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/../javamail-1.4.5" recursive="false" />
       </library>
     </orderEntry>
   </component>
