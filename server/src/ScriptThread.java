@@ -1,6 +1,10 @@
 
 import java.io.*;
 
+/**
+ * @author Denis Ievlev
+ * @author Samer Hadeed
+ */
 public class ScriptThread implements Runnable {
 
     private ServerView serverView;

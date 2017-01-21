@@ -4,7 +4,8 @@ import java.util.*;
  * The class {@link ServerModel} represents the model part<br>
  * of the MVC pattern.
  *
- * @author Alexey Kurbatsky
+ * @author Denis Ievlev
+ * @author Samer Hadeed
  */
 public class ServerModel {
     private Vector<Channel> channels = new Vector<>();

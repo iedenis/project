@@ -8,7 +8,7 @@ import java.awt.event.*;
  * Represents the View part of the MVC pattern.<br>
  * This is a GUI for the server
  *
- * @author Alexey Kurbatsky
+ * @author Samer Hadeed
  * @author Denis Ievlev
  */
 public class ServerView extends JFrame {

@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
  * Server is written in Model–view–controller design pattern<br>
  * where the controller connects between the view and the model
  *
- * @author Alexey Kurbatsky
  * @author Denis Ievlev
+ * @author Samer Hadeed
  */
 
 public class ServerMain {

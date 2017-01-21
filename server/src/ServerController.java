@@ -10,7 +10,9 @@ import java.net.SocketException;
 /**
  * Class represents server controller.<br>
  * It connects between {@link ServerModel} class and {@link ServerView} class
- * @author Alexey Kurbatsky.
+ * @author Denis Ievlev
+ * @author Samer Hadeed
+ *
  */
 public class ServerController implements Runnable {
     private ServerModel serverModel;
@@ -57,16 +59,16 @@ public class ServerController implements Runnable {
     }
 
     /**
-     * Stops the server and sends to all users {@link Protocol#disconnectMessage} message<br>
+     * Stops the server and sends to all users <br>
      * to disconnect before it stops.
      * @throws IOException when cannot stop
      */
     public void stop() throws IOException {
         for ( Channel channel : serverModel.getChannels()) {
-            String message = Protocol.createMessage(Protocol.serverMessage, "", "The server is going down!");
-            channel.send(message);
-            message = Protocol.createMessage(Protocol.disconnectMessage, "", "");
-            channel.send(message);
+            //String message = Protocol.createMessage(Protocol.serverMessage, "", "The server is going down!");
+            //channel.send(message);
+            //message = Protocol.createMessage(Protocol.disconnectMessage, "", "");
+           // channel.send(message);
             channel.stop();
 
 
