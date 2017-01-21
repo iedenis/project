@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="/home/fox/project/project/itext/itextpdf-5.5.9.jar"/>
+	<classpathentry kind="lib" path="/home/fox/project/project/itext/itext-xtra-5.5.9.jar"/>
+	<classpathentry kind="lib" path="/home/fox/project/project/itext/xmlworker-5.5.9-sources.jar"/>
+	<classpathentry kind="lib" path="/home/fox/project/project/itext/xmlworker-5.5.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/fox/project/project/itext/xmlworker-5.5.9.jar"/>
+	<classpathentry kind="lib" path="/home/fox/project/project/itext/itext-xtra-5.5.9-sources.jar"/>
+	<classpathentry kind="lib" path="/home/fox/project/project/itext/itext-xtra-5.5.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/fox/project/project/itext/itext-pdfa-5.5.9-sources.jar"/>
+	<classpathentry kind="lib" path="/home/fox/project/project/itext/itext-pdfa-5.5.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/fox/project/project/itext/itext-pdfa-5.5.9.jar"/>
+	<classpathentry kind="lib" path="/home/fox/project/project/itext/itextpdf-5.5.9-sources.jar"/>
+	<classpathentry kind="lib" path="/home/fox/project/project/itext/itextpdf-5.5.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/fox/project/project/javamail-1.4.5/mail.jar" sourcepath="/home/fox/project/project/javamail-1.4.5/mail.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
