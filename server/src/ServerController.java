@@ -96,6 +96,7 @@ public class ServerController implements Runnable {
         while (running) {
             try {
                 newSocket = serverSocket.accept();
+                System.out.println("Trying to connect.....");
                 channel = new Channel(newSocket, serverModel, serverView);
                 serverModel.addChannel(channel);
                 channel.start();

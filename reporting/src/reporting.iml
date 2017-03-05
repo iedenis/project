@@ -36,5 +36,14 @@
         <jarDirectory url="file://$MODULE_DIR$/../javamail-1.4.5" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Desktop/javaxt/bin/javaxt-core.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

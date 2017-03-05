@@ -71,7 +71,7 @@ public class Channel implements Runnable
             while (running) {
                 try {
                     String message = reader.nextLine();
-                    //handleMessage(message);
+                   // acceptImage(message);
                 }
                 catch(NoSuchElementException e) {
                     System.err.println(name + " channel has closed");
@@ -85,6 +85,42 @@ public class Channel implements Runnable
             e.printStackTrace();
         }
     }
+/* accepting file code
+
+//Accept File
+            System.out.println("Connected");
+
+            //receive code
+            int filesize=450660;
+            int bytesRead;
+            int current=0;
+            // receive file
+            byte [] mybytearray  = new byte [filesize];
+            InputStream is = sock.getInputStream();
+            FileOutputStream fos = new FileOutputStream("C:\\Project Server\\Capture.png");
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            bytesRead = is.read(mybytearray,0,mybytearray.length);
+            current = bytesRead;
+
+            do {
+               bytesRead =
+                  is.read(mybytearray, current, (mybytearray.length-current));
+               if(bytesRead >= 0) current += bytesRead;
+            } while(bytesRead > -1);
+
+            bos.write(mybytearray, 0 , current);
+            bos.flush();
+
+            System.out.println("end-start");
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+
+    }
+ */
 
 
 
