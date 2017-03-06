@@ -1,8 +1,4 @@
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -11,15 +7,14 @@ import java.util.Scanner;
  * The class represents all chat options for the server<br>
  * such as: handling messages that server receive from clients,
  * retransmitting them and other.
+ *
  * @author Denis Ievlev
  * @author Samer Hadeed
- *
  */
-public class Channel implements Runnable
-{
+public class Channel implements Runnable {
     private Socket socket;
     private Scanner reader;
-    private PrintWriter writer;
+    //private PrintWriter writer;
     private boolean running;
     private String name = null;
     private ServerModel serverModel;
@@ -42,12 +37,13 @@ public class Channel implements Runnable
 
     /**
      * Stops the current thread
+     *
      * @throws IOException when cannot close stream or current thread
      */
     public void stop() throws IOException {
         running = false;
 
-        writer.close();
+//        writer.close();
         reader.close();
         socket.close();
     }
@@ -61,29 +57,75 @@ public class Channel implements Runnable
     @Override
     public void run() {
         try {
+            //  System.out.print("Success");
+/*
             OutputStream outputStream = socket.getOutputStream();
             writer = new PrintWriter(outputStream);
 
             InputStream inputStream = socket.getInputStream();
             reader = new Scanner(inputStream);
+           */
             running = true;
+
 
             while (running) {
                 try {
-                    String message = reader.nextLine();
-                   // acceptImage(message);
-                }
-                catch(NoSuchElementException e) {
-                    System.err.println(name + " channel has closed");
+                    saveFile();
+                    socket.close();
+                    System.out.println("LOG: Socket closed");
+                    //String message = reader.nextLine();
+                    // acceptImage(message);
+                } catch (NoSuchElementException e) {
+                    System.err.println(name + " channel has been closed");
                     e.getStackTrace();
                     disconnectMessageRequest();
                     break;
                 }
             }
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void saveFile() throws IOException {
+        int filesize=10000000; // filesize temporary hardcoded
+
+        long start = System.currentTimeMillis();
+        int bytesRead;
+        int current = 0;
+        byte [] mybytearray  = new byte [filesize];
+        DataInputStream in = new DataInputStream(socket.getInputStream());
+
+        FileOutputStream fos = new FileOutputStream("WebOffice.jpg"); // destination path and name of file
+        int i;
+        while ( (i = in.read()) > -1) {
+            fos.write(i);
+        }
+        /*
+        System.out.println("Trying to save a received file");
+        DataInputStream dis = new DataInputStream(socket.getInputStream());
+        FileOutputStream fos = null;
+
+        fos = new FileOutputStream("testfile.jpg");
+
+        byte[] buffer = new byte[4096];
+
+        int filesize = 15123; // Send file size in separate msg
+        int read = 0;
+        int totalRead = 0;
+        int remaining = filesize;
+        while ((read = dis.read(buffer, 0, Math.min(buffer.length, remaining))) > 0) {
+            totalRead += read;
+            remaining -= read;
+            System.out.println("read " + totalRead + " bytes.");
+            fos.write(buffer, 0, read);
+        }
+
+        fos.close();
+        dis.close();
+        System.out.println("Finished to read a file from client");
+        */
+
     }
 /* accepting file code
 
@@ -123,7 +165,6 @@ public class Channel implements Runnable
  */
 
 
-
     /**
      * Handles the received disconnecting message from client.<br>
      * Removes the user from online users list.
@@ -141,7 +182,7 @@ public class Channel implements Runnable
             stop();
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Failed to stop the channel thread for user: " + name );
+            System.err.println("Failed to stop the channel thread for user: " + name);
         }
     }
 

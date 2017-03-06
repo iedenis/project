@@ -10,9 +10,9 @@ import java.net.SocketException;
 /**
  * Class represents server controller.<br>
  * It connects between {@link ServerModel} class and {@link ServerView} class
+ *
  * @author Denis Ievlev
  * @author Samer Hadeed
- *
  */
 public class ServerController implements Runnable {
     private ServerModel serverModel;
@@ -24,10 +24,11 @@ public class ServerController implements Runnable {
 
     /**
      * Constructor for Server Controller.
+     *
      * @param serverModel {@link ServerModel} object
      * @param serverView  {@link ServerView} GUI object
      */
-    public ServerController (ServerModel serverModel, ServerView serverView) {
+    public ServerController(ServerModel serverModel, ServerView serverView) {
         this.serverModel = serverModel;
         this.serverView = serverView;
 
@@ -41,6 +42,7 @@ public class ServerController implements Runnable {
 
     /**
      * Creates a new server socket
+     *
      * @throws IOException when cannot create a socket
      */
     public void bind() throws IOException {
@@ -61,19 +63,21 @@ public class ServerController implements Runnable {
     /**
      * Stops the server and sends to all users <br>
      * to disconnect before it stops.
+     *
      * @throws IOException when cannot stop
      */
     public void stop() throws IOException {
-        for ( Channel channel : serverModel.getChannels()) {
+        for (Channel channel : serverModel.getChannels()) {
             //String message = Protocol.createMessage(Protocol.serverMessage, "", "The server is going down!");
             //channel.send(message);
             //message = Protocol.createMessage(Protocol.disconnectMessage, "", "");
-           // channel.send(message);
+            // channel.send(message);
             channel.stop();
 
 
         }
-        scriptWriter.stop();
+        //TODO open
+        //scriptWriter.stop();
         serverModel.dropClients();
         serverModel.dropChannels();
         running = false;
@@ -89,31 +93,36 @@ public class ServerController implements Runnable {
 
         Socket newSocket = null;
         Channel channel = null;
-       // ScriptThread script= null;
+        // ScriptThread script= null;
         running = true;
-        scriptWriter=new ScriptThread(serverModel,serverView);
-        scriptWriter.start();
+        //TODO open braces to start script
+        //scriptWriter = new ScriptThread(serverModel, serverView);
+       // scriptWriter.start();
         while (running) {
             try {
+                //printText("Trying to connect... ");
                 newSocket = serverSocket.accept();
-                System.out.println("Trying to connect.....");
+                printText("Connected to client");
                 channel = new Channel(newSocket, serverModel, serverView);
                 serverModel.addChannel(channel);
                 channel.start();
-            }
-            catch (SocketException e) {
-                serverView.appendMessage("The socket was closed");
-            }
-            catch (IOException e) {
+            } catch (SocketException e) {
+                printText("The socket was closed");
+            } catch (IOException e) {
                 e.printStackTrace();
-                System.err.println("Failed to add socket");
+                System.err.println("LOG: Failed to add socket");
             }
 
         }
     }
 
+    void printText(String text) {
+        serverView.appendMessage(text);
+    }
+
     /**
      * Handles the {@link ServerController#stop()} method
+     *
      * @throws IOException when cannot stop server
      */
     private void stopServerHandler() {
@@ -123,15 +132,16 @@ public class ServerController implements Runnable {
             System.err.println("Failed to stop server");
             e.printStackTrace();
         }
-        serverView.appendMessage("Server stopped");
+        printText("Server stopped");
         serverView.setButtonText("Start Server");
         serverView.setServerStateRunning(false);
     }
 
     /**
      * Starting the serve with method {@link ServerController#start()}
+     *
      * @throws IOException when cannot start the server<br>
-     * and can't create the server socket
+     *                     and can't create the server socket
      */
     private void startServerHandler() {
         try {
@@ -141,7 +151,9 @@ public class ServerController implements Runnable {
             e.printStackTrace();
         }
         start();
-        serverView.appendMessage("Server is up and running\n");
+
+
+        printText("Server is up and running\n");
         serverView.setButtonText("Stop Server ");
         serverView.setServerStateRunning(true);
         //serverView.appendMessage("Starting the main script\n");
@@ -159,12 +171,9 @@ public class ServerController implements Runnable {
          */
         @Override
         public void mouseClicked(MouseEvent e) {
-            if (serverView.isServerStateRunning())
-            {
+            if (serverView.isServerStateRunning()) {
                 stopServerHandler();
-            }
-            else
-            {
+            } else {
                 startServerHandler();
             }
         }
@@ -199,12 +208,12 @@ public class ServerController implements Runnable {
         /**
          * Method to close the window. When clicking X (close) on window<br>
          * it stops the server
+         *
          * @throws IOException when there is a problem to stop the server
          */
         @Override
         public void windowClosing(WindowEvent e) {
-            if (serverView.isServerStateRunning())
-            {
+            if (serverView.isServerStateRunning()) {
                 try {
                     stop();
 
