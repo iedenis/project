@@ -1,14 +1,18 @@
+
+
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.File;
 import java.io.FileOutputStream;
 
-//import java.io.FileNotFoundException;
-//import java.io.IOException;
-//import com.itextpdf.text.DocumentException;
-
-//AIzaSyCTJuS325EPe5H7PKiwhWHztDKq-8CLYro
+/**
+ * @author Denis Ievlev
+ * @author Samer Hadeed
+ *
+ * Class PDF represents creating PDF file.<br>
+ * This is the main class
+ */
 public class PDF {
     static String dest = System.getProperty("user.dir") + "/report.pdf";
     static String imPath = "";
@@ -32,7 +36,7 @@ public class PDF {
         paragraph1.add("According to your database this car is stolen. Here are coordinates and the picture of the car");
         // parsing an image coordinates
 
-//parsing an image
+        //parsing an image
         javaxt.io.Image image = new javaxt.io.Image(imPath);
         double[] gps = image.getGPSCoordinate();
         System.out.print("Coordinates " + gps[0] + " " + gps[1]);

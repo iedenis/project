@@ -1,4 +1,4 @@
-package project;
+/*package project;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
@@ -47,3 +47,4 @@ public class FileServer {
     }
 
 }
+*/

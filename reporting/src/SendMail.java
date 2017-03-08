@@ -10,6 +10,13 @@ public class SendMail {
     private String filePath;
     private String password;
 
+    /**
+     * Constructor
+     * @param from email of sending address
+     * @param password The email password
+     * @param to email of destination address
+     * @param filePath The path of the included file
+     */
     public SendMail(String from, String password, String to, String filePath) {
         this.from = from;
         this.password = password;
@@ -17,6 +24,9 @@ public class SendMail {
         this.filePath = filePath;
     }
 
+    /**
+     * Method to send an email.
+     */
     public void sendMail() {
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
