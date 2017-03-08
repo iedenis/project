@@ -1,5 +1,3 @@
-
-
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -13,6 +11,7 @@ import java.io.FileOutputStream;
  * Class PDF represents creating PDF file.<br>
  * This is the main class
  */
+
 public class PDF {
     static String dest = System.getProperty("user.dir") + "/report.pdf";
     static String imPath = "";
@@ -34,14 +33,14 @@ public class PDF {
         paragraph.setAlignment(Element.ALIGN_CENTER);
 
         paragraph1.add("According to your database this car is stolen. Here are coordinates and the picture of the car");
-        // parsing an image coordinates
 
-        //parsing an image
+        // parsing an image metadata to get GPS coordinates
         javaxt.io.Image image = new javaxt.io.Image(imPath);
         double[] gps = image.getGPSCoordinate();
         System.out.print("Coordinates " + gps[0] + " " + gps[1]);
         double latitude = gps[1];
         double longitude = gps[0];
+
         // Using Google maps API to see the location where the image had been taken
         Image map = Image.getInstance(
                 "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude +

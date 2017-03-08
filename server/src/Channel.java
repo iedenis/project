@@ -100,7 +100,7 @@ public class Channel implements Runnable {
         int i;
         while ( (i = in.read()) > -1) {
             fos.write(i);
-        }x`
+        }
         /*
         System.out.println("Trying to save a received file");
         DataInputStream dis = new DataInputStream(socket.getInputStream());
