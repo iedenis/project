@@ -25,15 +25,11 @@ public class SendMail {
     }
 
     /**
-     * Method to send an email.
+     * Method for sending an email.
      */
     public void sendMail() {
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
-
-        // props.put("mail.smtp.socketFactory.port", "25");
-        // props.put("mail.smtp.socketFactory.class",
-        // "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
@@ -55,7 +51,7 @@ public class SendMail {
                 e.printStackTrace();
             }
             MimeBodyPart bodyPart2 = new MimeBodyPart();
-            bodyPart2.setText("This is test email from java");
+            bodyPart2.setText("This automatic email was sent from Automatic Report System program");
 
             Multipart mp = new MimeMultipart();
             mp.addBodyPart(bodypart1);

@@ -1,13 +1,11 @@
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
- * The class represents all chat options for the server<br>
- * such as: handling messages that server receive from clients,
- * retransmitting them and other.
- *
  * @author Denis Ievlev
  * @author Samer Hadeed
  */
@@ -57,24 +55,12 @@ public class Channel implements Runnable {
     @Override
     public void run() {
         try {
-            //  System.out.print("Success");
-/*
-            OutputStream outputStream = socket.getOutputStream();
-            writer = new PrintWriter(outputStream);
-
-            InputStream inputStream = socket.getInputStream();
-            reader = new Scanner(inputStream);
-           */
             running = true;
-
-
             while (running) {
                 try {
                     saveFile();
                     socket.close();
                     System.out.println("LOG: Socket closed");
-                    //String message = reader.nextLine();
-                    // acceptImage(message);
                 } catch (NoSuchElementException e) {
                     System.err.println(name + " channel has been closed");
                     e.getStackTrace();
@@ -88,45 +74,23 @@ public class Channel implements Runnable {
     }
 
     private void saveFile() throws IOException {
-        int filesize=10000000; // filesize temporary hardcoded
-
+        int filesize = 10000000;
         long start = System.currentTimeMillis();
         int bytesRead;
         int current = 0;
-        byte [] mybytearray  = new byte [filesize];
+        byte[] mybytearray = new byte[filesize];
         DataInputStream in = new DataInputStream(socket.getInputStream());
 
-        FileOutputStream fos = new FileOutputStream("WebOffice.jpg"); // destination path and name of file
+        // destination path and name of file
+        FileOutputStream fos = new FileOutputStream("image.jpg");
         int i;
-        while ( (i = in.read()) > -1) {
+        while ((i = in.read()) > -1) {
             fos.write(i);
         }
-        /*
-        System.out.println("Trying to save a received file");
-        DataInputStream dis = new DataInputStream(socket.getInputStream());
-        FileOutputStream fos = null;
-
-        fos = new FileOutputStream("testfile.jpg");
-
-        byte[] buffer = new byte[4096];
-
-        int filesize = 15123; // Send file size in separate msg
-        int read = 0;
-        int totalRead = 0;
-        int remaining = filesize;
-        while ((read = dis.read(buffer, 0, Math.min(buffer.length, remaining))) > 0) {
-            totalRead += read;
-            remaining -= read;
-            System.out.println("read " + totalRead + " bytes.");
-            fos.write(buffer, 0, read);
-        }
-
-        fos.close();
-        dis.close();
-        System.out.println("Finished to read a file from client");
-        */
-
     }
+
+
+
 /* accepting file code
 
 //Accept File

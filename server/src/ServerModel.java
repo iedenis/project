@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.Hashtable;
+import java.util.Vector;
 
 /**
  * The class {@link ServerModel} represents the model part<br>
@@ -10,6 +11,7 @@ import java.util.*;
 public class ServerModel {
     private Vector<Channel> channels = new Vector<>();
     private Hashtable<String, Channel> clients = new Hashtable<>();
+
     /**
      * Adds new channel to the channels vector
      *

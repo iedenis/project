@@ -97,10 +97,10 @@ public class ServerController implements Runnable {
         running = true;
         //TODO open braces to start script
         //scriptWriter = new ScriptThread(serverModel, serverView);
-       // scriptWriter.start();
+        // scriptWriter.start();
         while (running) {
             try {
-                //printText("Trying to connect... ");
+                printText("Trying to connect... ");
                 newSocket = serverSocket.accept();
                 printText("Connected to client");
                 channel = new Channel(newSocket, serverModel, serverView);

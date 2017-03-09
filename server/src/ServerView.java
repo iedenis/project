@@ -1,8 +1,6 @@
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.*;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowListener;
 
 /**
  * Represents the View part of the MVC pattern.<br>
@@ -19,14 +17,14 @@ public class ServerView extends JFrame {
     private JScrollPane scroll;
 
     public ServerView() {
-       // mainPanel.setLayout(new BorderLayout(0,0));
+        // mainPanel.setLayout(new BorderLayout(0,0));
         //scroll = new JScrollPane();
         //systemMessagesArea = new JTextArea();
         systemMessagesArea.setEditable(false);
 
-       // scroll.setViewportView(systemMessagesArea);
+        // scroll.setViewportView(systemMessagesArea);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       // add(scroll);
+        // add(scroll);
         add(mainPanel);
 
         setTitle("Server");

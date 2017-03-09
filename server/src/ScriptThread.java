@@ -1,5 +1,6 @@
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * @author Denis Ievlev
@@ -26,19 +27,18 @@ public class ScriptThread implements Runnable {
     }
 
     public void stop() {
-
         pr.destroyForcibly();
         running = false;
     }
 
     @Override
     public void run() {
-        running=true;
+        running = true;
         try {
             ProcessBuilder builder = new ProcessBuilder(mainScript);
             builder.redirectErrorStream(true);
-            pr=builder.start();
-           // pr = Runtime.getRuntime().exec(mainScript);
+            pr = builder.start();
+            // pr = Runtime.getRuntime().exec(mainScript);
             serverView.appendMessage("LOG: Starting the main script...\n");
         } catch (IOException e)
 
