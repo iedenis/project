@@ -1,2 +1,6 @@
 # project
-Automatic Report System
+###########################
+# Automatic Report System #
+###########################
+
+This repository is for our final study's project. 
