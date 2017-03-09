@@ -1,2 +1,2 @@
 # project
-Automatic Reporting System
+Automatic Report System
