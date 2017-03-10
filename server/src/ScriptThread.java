@@ -17,6 +17,7 @@ public class ScriptThread implements Runnable {
 
     /**
      * Constructor for Script Thread
+     *
      * @param serverModel {@link ServerModel} Model object
      * @param serverView  {@link ServerView} The server GUI
      */
@@ -40,6 +41,7 @@ public class ScriptThread implements Runnable {
      */
     public void stop() {
         pr.destroyForcibly();
+        pr.destroy();
         running = false;
     }
 

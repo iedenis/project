@@ -69,7 +69,6 @@ public class ServerController implements Runnable {
     public void stop() throws IOException {
         for (Channel channel : serverModel.getChannels()) {
             channel.stop();
-
         }
 
         scriptWriter.stop();
@@ -210,6 +209,8 @@ public class ServerController implements Runnable {
             if (serverView.isServerStateRunning()) {
                 try {
                     stop();
+                    scriptWriter.stop();
+                    System.exit(0);
 
                 } catch (IOException err) {
                     System.err.println("Failed to stop server");
