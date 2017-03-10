@@ -15,17 +15,29 @@ public class ScriptThread implements Runnable {
     private BufferedReader reader;
     private boolean running;
 
+    /**
+     * Constructor for Script Thread
+     * @param serverModel {@link ServerModel} Model object
+     * @param serverView  {@link ServerView} The server GUI
+     */
     public ScriptThread(ServerModel serverModel, ServerView serverView) {
         this.serverView = serverView;
         this.serverModel = serverModel;
     }
 
+    /**
+     * Thread start function
+     */
     public void start() {
         Thread thread = new Thread(this);
         thread.setName("Writing from script");
         thread.start();
     }
 
+    /**
+     * Thread stop method
+     * kills the running script
+     */
     public void stop() {
         pr.destroyForcibly();
         running = false;
@@ -43,6 +55,7 @@ public class ScriptThread implements Runnable {
         } catch (IOException e)
 
         {
+            System.err.print("Wrong script folder");
             serverView.appendMessage("The script file doesn't exist in this folder");
         }
 

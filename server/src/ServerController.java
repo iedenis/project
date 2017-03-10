@@ -68,16 +68,11 @@ public class ServerController implements Runnable {
      */
     public void stop() throws IOException {
         for (Channel channel : serverModel.getChannels()) {
-            //String message = Protocol.createMessage(Protocol.serverMessage, "", "The server is going down!");
-            //channel.send(message);
-            //message = Protocol.createMessage(Protocol.disconnectMessage, "", "");
-            // channel.send(message);
             channel.stop();
 
-
         }
-        //TODO open
-        //scriptWriter.stop();
+
+        scriptWriter.stop();
         serverModel.dropClients();
         serverModel.dropChannels();
         running = false;
@@ -95,12 +90,11 @@ public class ServerController implements Runnable {
         Channel channel = null;
         // ScriptThread script= null;
         running = true;
-        //TODO open braces to start script
-        //scriptWriter = new ScriptThread(serverModel, serverView);
-        // scriptWriter.start();
+        scriptWriter = new ScriptThread(serverModel, serverView);
+        scriptWriter.start();
         while (running) {
             try {
-                printText("Trying to connect... ");
+                //printText("Trying to connect... ");
                 newSocket = serverSocket.accept();
                 printText("Connected to client");
                 channel = new Channel(newSocket, serverModel, serverView);

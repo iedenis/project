@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class Channel implements Runnable {
     private Socket socket;
-    private Scanner reader;
+    //private Scanner reader;
     //private PrintWriter writer;
     private boolean running;
     private String name = null;
@@ -38,12 +38,15 @@ public class Channel implements Runnable {
      *
      * @throws IOException when cannot close stream or current thread
      */
-    public void stop() throws IOException {
+    public void stop()  {
         running = false;
 
-//        writer.close();
-        reader.close();
-        socket.close();
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.print("Failed to close the socket");
+        }
     }
 
     /*
@@ -59,8 +62,9 @@ public class Channel implements Runnable {
             while (running) {
                 try {
                     saveFile();
-                    socket.close();
+                    stop();
                     System.out.println("LOG: Socket closed");
+                    serverView.appendMessage("Disconnected from client");
                 } catch (NoSuchElementException e) {
                     System.err.println(name + " channel has been closed");
                     e.getStackTrace();
@@ -74,6 +78,7 @@ public class Channel implements Runnable {
     }
 
     private void saveFile() throws IOException {
+        serverView.appendMessage("Receiving image...");
         int filesize = 10000000;
         long start = System.currentTimeMillis();
         int bytesRead;
@@ -82,11 +87,14 @@ public class Channel implements Runnable {
         DataInputStream in = new DataInputStream(socket.getInputStream());
 
         // destination path and name of file
-        FileOutputStream fos = new FileOutputStream("image.jpg");
+        FileOutputStream fos = new FileOutputStream("/home/fox/images/image.jpg");
         int i;
         while ((i = in.read()) > -1) {
             fos.write(i);
         }
+        fos.close();
+        in.close();
+        serverView.appendMessage("Image received and saved in /images folder");
     }
 
 
@@ -133,6 +141,7 @@ public class Channel implements Runnable {
      * Handles the received disconnecting message from client.<br>
      * Removes the user from online users list.
      */
+
     private void disconnectMessageRequest() {
         if (name != null) {
             serverModel.removeClient(name);
@@ -141,13 +150,7 @@ public class Channel implements Runnable {
 
         serverModel.removeChannel(this);
         //sendUserNames();
-
-        try {
             stop();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Failed to stop the channel thread for user: " + name);
-        }
-    }
 
+    }
 }

@@ -16,6 +16,9 @@ public class ServerView extends JFrame {
     private JTextArea systemMessagesArea;
     private JScrollPane scroll;
 
+    /**
+     * Constructor
+     */
     public ServerView() {
         // mainPanel.setLayout(new BorderLayout(0,0));
         //scroll = new JScrollPane();
