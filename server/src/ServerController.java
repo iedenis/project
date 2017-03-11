@@ -93,14 +93,13 @@ public class ServerController implements Runnable {
         scriptWriter.start();
         while (running) {
             try {
-                //printText("Trying to connect... ");
                 newSocket = serverSocket.accept();
                 printText("Connected to client");
                 channel = new Channel(newSocket, serverModel, serverView);
                 serverModel.addChannel(channel);
                 channel.start();
             } catch (SocketException e) {
-                printText("The socket was closed");
+                printText("The server's socket is closed");
             } catch (IOException e) {
                 e.printStackTrace();
                 System.err.println("LOG: Failed to add socket");

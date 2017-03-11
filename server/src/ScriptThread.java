@@ -1,6 +1,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import static java.lang.System.exit;
 
 /**
  * @author Denis Ievlev
@@ -8,10 +12,11 @@ import java.io.InputStreamReader;
  */
 public class ScriptThread implements Runnable {
 
+    Path scriptPath = Paths.get(System.getProperty("user.dir")).getParent();
     private ServerView serverView;
     private ServerModel serverModel;
     private Process pr = null;
-    private String[] mainScript = {"main.sh"};
+    //private String[] mainScript = {"/home/fox/Project/main.sh"};
     private BufferedReader reader;
     private boolean running;
 
@@ -51,41 +56,46 @@ public class ScriptThread implements Runnable {
     public void run() {
         running = true;
         try {
-            ProcessBuilder builder = new ProcessBuilder(mainScript);
+            //  System.out.println(path.getParent()+"/main.sh");
+
+            ProcessBuilder builder = new ProcessBuilder(scriptPath.toString() + "/main.sh");
             builder.redirectErrorStream(true);
-            if (pr != null) {
-                serverView.appendMessage("LOG: Starting the main script...\n");
-                pr = builder.start();
-            } else {
-                serverView.appendMessage("The script file doesn't exist in this folder");
-                this.stop();
-            }
+            pr = builder.start();
+            serverView.appendMessage("LOG: Starting the main script...\n");
+
 
             // pr = Runtime.getRuntime().exec(mainScript);
         } catch (IOException e)
 
         {
+
             System.err.println("Wrong script folder");
+            serverView.appendMessage("The script file doesn't exist in folder /Project ");
+            this.stop();
+
         }
 
+        if (running) {
+            reader = new BufferedReader(new InputStreamReader(
+                    pr.getInputStream()));
+            String s;
+            try
 
-        reader = new BufferedReader(new InputStreamReader(
-                pr.getInputStream()));
-        String s;
-        try
+            {
+                while ((s = reader.readLine()) != null && running)
+                    serverView.appendMessage("Script output: " + s);
+            } catch (IOException e)
 
-        {
-            while ((s = reader.readLine()) != null && running)
-                serverView.appendMessage("Script output: " + s);
-        } catch (IOException e)
-
-        {
-            e.printStackTrace();
-        }
-        try {
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            {
+                this.stop();
+                this.serverView.appendMessage("Server is going down...");
+                //e.printStackTrace();
+            }
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

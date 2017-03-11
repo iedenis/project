@@ -1,8 +1,11 @@
 #!/bin/bash
-MONITORDIR="$(pwd)/images/"
+
+MONITORDIR="$(pwd)"
+#we need the PARENTDIR because server.jar launches this script from its folder 
+PARENTDIR="$(dirname "$MONITORDIR")"
 SCRIPTDIRECTORY=$(pwd)
 echo $0
-inotifywait -m -r -e create --format '%w%f' "${MONITORDIR}" | while read NEWFILE
+inotifywait -m -r -e create --format '%w%f' "${PARENTDIR}" | while read NEWFILE
 do
         echo  "LOG: Image ${NEWFILE} has been created"
 line=$(alpr -c eu ${NEWFILE} -n 1)
@@ -16,10 +19,10 @@ if ! [[ ${stringArray[4]} =~ $re ]]; then echo "Couldn't detect the number from 
 
 else
 echo
-	/home/fox/Project/./checkPNumber.sh ${stringArray[4]}
+	${PARENTDIR}/./checkPNumber.sh ${stringArray[4]}
 if ! [ $? -eq 0 ]; then 
 echo "LOG: returned value $?"
-cd $(pwd)/jar_files && java -jar report.jar ${NEWFILE}
+cd ${PARENTDIR}/jar_files && java -jar report.jar ${NEWFILE}
 fi
 fi
 done
