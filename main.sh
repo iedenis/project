@@ -1,5 +1,5 @@
 #!/bin/bash
-MONITORDIR="/home/fox/images/"
+MONITORDIR="$(pwd)/images/"
 SCRIPTDIRECTORY=$(pwd)
 echo $0
 inotifywait -m -r -e create --format '%w%f' "${MONITORDIR}" | while read NEWFILE
@@ -19,7 +19,7 @@ echo
 	/home/fox/Project/./checkPNumber.sh ${stringArray[4]}
 if ! [ $? -eq 0 ]; then 
 echo "LOG: returned value $?"
-cd /home/fox/Project/ && java -jar report.jar ${NEWFILE}
+cd $(pwd)/jar_files && java -jar report.jar ${NEWFILE}
 fi
 fi
 done

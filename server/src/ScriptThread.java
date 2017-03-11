@@ -11,7 +11,7 @@ public class ScriptThread implements Runnable {
     private ServerView serverView;
     private ServerModel serverModel;
     private Process pr = null;
-    private String[] mainScript = {"/home/fox/Project/main.sh"};
+    private String[] mainScript = {"main.sh"};
     private BufferedReader reader;
     private boolean running;
 
@@ -40,8 +40,10 @@ public class ScriptThread implements Runnable {
      * kills the running script
      */
     public void stop() {
-        pr.destroyForcibly();
-        pr.destroy();
+        if (pr != null) {
+            pr.destroyForcibly();
+            pr.destroy();
+        }
         running = false;
     }
 
@@ -51,14 +53,19 @@ public class ScriptThread implements Runnable {
         try {
             ProcessBuilder builder = new ProcessBuilder(mainScript);
             builder.redirectErrorStream(true);
-            pr = builder.start();
+            if (pr != null) {
+                serverView.appendMessage("LOG: Starting the main script...\n");
+                pr = builder.start();
+            } else {
+                serverView.appendMessage("The script file doesn't exist in this folder");
+                this.stop();
+            }
+
             // pr = Runtime.getRuntime().exec(mainScript);
-            serverView.appendMessage("LOG: Starting the main script...\n");
         } catch (IOException e)
 
         {
-            System.err.print("Wrong script folder");
-            serverView.appendMessage("The script file doesn't exist in this folder");
+            System.err.println("Wrong script folder");
         }
 
 
