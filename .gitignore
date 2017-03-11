@@ -1,0 +1,10 @@
+/server/out/*
+/server/.idea
+server/.idea/workspace.xml
+reporting/src/.idea
+images/
+reporting/src/out/production/reporting/.idea/uiDesigner.xml
+reporting/src/out/production/reporting/background.jpg
+reporting/src/report.pdf
+reporting/src/out/*
+reporting/src/out/production/reporting/.idea/misc.xml

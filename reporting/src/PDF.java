@@ -1,4 +1,6 @@
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfGState;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.File;
@@ -21,17 +23,31 @@ public class PDF {
 
 
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(dest));
+      PdfWriter writer= PdfWriter.getInstance(document, new FileOutputStream(dest));
         document.open();
         Font font = new Font(Font.FontFamily.HELVETICA, 20);
         imPath = args[0];
         Image im = Image.getInstance(imPath);
-        //Image im = Image.getInstance("/home/fox/project/project/src/project/image.jpg");
+        //String backgroundImagePath=System.getProperty("user.dir"));
+        Image backgroundImage = Image.getInstance("background.jpg");
+       // PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(dest));
+        PdfContentByte canvas = writer.getDirectContentUnder();
+        canvas.saveState();
+        PdfGState state = new PdfGState();
+        state.setFillOpacity(0.6f);
+        canvas.setGState(state);
+        backgroundImage.scaleAbsolute(PageSize.A4);
+        backgroundImage.setAbsolutePosition(0,0);
+        canvas.addImage(backgroundImage);
+        canvas.restoreState();
+
+
         im.scaleAbsolute(480, 300);
         Paragraph paragraph = new Paragraph("Hello police!!", font);
         Paragraph paragraph1 = new Paragraph();
-        paragraph.setAlignment(Element.ALIGN_CENTER);
 
+        paragraph.setAlignment(Element.ALIGN_CENTER);
+        paragraph1.add("*********************************************************************************************************\n");
         paragraph1.add("According to your database this car is stolen. Here are coordinates and the picture of the car");
 
         // parsing an image metadata to get GPS coordinates
@@ -45,9 +61,9 @@ public class PDF {
         Image map = Image.getInstance(
                 "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude +
                         "&zoom=15&markers=color:blue%size=mid|" + latitude + "," + longitude +
-                        "&size=400x400&maptype=roadmap18&key=AIzaSyCTJuS325EPe5H7PKiwhWHztDKq-8CLYro");
+                        "&size=480x300&maptype=roadmap18&key=AIzaSyCTJuS325EPe5H7PKiwhWHztDKq-8CLYro");
 
-
+        map.scaleAbsolute(480, 300);
         document.add(paragraph);
         document.add(paragraph1);
 
@@ -57,8 +73,8 @@ public class PDF {
 
         System.out.println("LOG: report has been created in directory: " + dest);
 
-        SendMail mail = new SendMail("id321582918@gmail.com", "ievlev85", "denis.ievlev@gmail.com", dest);
-        mail.sendMail();
+        //SendMail mail = new SendMail("id321582918@gmail.com", "ievlev85", "denis.ievlev@gmail.com", dest);
+        //mail.sendMail();
     }
 
 }
