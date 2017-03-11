@@ -73,8 +73,8 @@ public class PDF {
 
         System.out.println("LOG: report has been created in directory: " + dest);
 
-        //SendMail mail = new SendMail("id321582918@gmail.com", "ievlev85", "denis.ievlev@gmail.com", dest);
-        //mail.sendMail();
+        SendMail mail = new SendMail("id321582918@gmail.com", "ievlev85", "denis.ievlev@gmail.com", dest);
+        mail.sendMail();
     }
 
 }
