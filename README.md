@@ -20,17 +20,18 @@ At the end of the process an email from the reporting system to the police is se
 ### Requirements
 - The server part can run only on GNU/Linux OS
 - The application developed for Android smartphones only
+
 ### Installation
 The program doesn't require installation. 
 1) Clone the repository into your local repository by:
 ```sh
 git clone https://github.com/iedenis/project
 ```
-Go to .jar files folder
+2) Go to .jar files folder
 ```sh
 cd jar_files
 ```
-And run the program 
+3) And run the program 
 ```sh
 java -jar server.jar
 ```
