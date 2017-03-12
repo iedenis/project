@@ -33,6 +33,6 @@ java -jar server.jar
 - OpenALPR - https://github.com/openalpr/openalpr 
 - Itext  - https://github.com/itext/itextpdf
 - Java Mail API https://java.net/projects/javamail/pages/Home
-*******************
+
+***
 Google static maps API https://developers.google.com/maps/documentation/static-maps/
-*****************
