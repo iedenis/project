@@ -24,7 +24,7 @@ At the end of the process an email from the reporting system to the police is se
 The program doesn't require installation. 
 1) Clone the repository into your local repository by:
 ```sh
-clone https://github.com/iedenis/project
+git clone https://github.com/iedenis/project
 ```
 Go to .jar files folder
 ```sh
