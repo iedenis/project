@@ -1,11 +1,16 @@
 #!/bin/bash
 
+echo "LOG: Main script executed"
 MONITORDIR="$(pwd)"
 #we need the PARENTDIR because server.jar launches this script from its folder 
+
 PARENTDIR="$(dirname "$MONITORDIR")"
-SCRIPTDIRECTORY=$(pwd)
-echo $0
-inotifywait -m -r -e create --format '%w%f' "${PARENTDIR}" | while read NEWFILE
+IMAGESDIR="$PARENTDIR/images" #the folder of received images
+#SCRIPTDIRECTORY=$(pwd)
+
+#echo $0
+echo "listening the folder ${IMAGESDIR}"
+inotifywait -m -r -e create --format '%w%f' "${IMAGESDIR}" | while read NEWFILE
 do
         echo  "LOG: Image ${NEWFILE} has been created"
 line=$(alpr -c eu ${NEWFILE} -n 1)

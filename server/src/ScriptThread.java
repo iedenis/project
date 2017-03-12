@@ -1,10 +1,9 @@
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import static java.lang.System.exit;
 
 /**
  * @author Denis Ievlev
@@ -43,6 +42,8 @@ public class ScriptThread implements Runnable {
     /**
      * Thread stop method
      * kills the running script
+     * Sometimes there is a problem to kill the process. I think it's because of the Java's bug
+     * appearing here  http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4770092
      */
     public void stop() {
         if (pr != null) {
@@ -55,22 +56,26 @@ public class ScriptThread implements Runnable {
     @Override
     public void run() {
         running = true;
-        try {
-            //  System.out.println(path.getParent()+"/main.sh");
+        String path = scriptPath.toString();
 
-            ProcessBuilder builder = new ProcessBuilder(scriptPath.toString() + "/main.sh");
+        //if executed with jar file located in /Project/jar_files
+
+        if (!path.contains("/Project"))
+            path = System.getProperty("user.dir").concat("/Project");
+
+        try {
+            serverView.appendMessage("LOG: executed from directory: " + path);
+            ProcessBuilder builder = new ProcessBuilder(path + "/main.sh");
             builder.redirectErrorStream(true);
             pr = builder.start();
-            serverView.appendMessage("LOG: Starting the main script...\n");
+            serverView.appendMessage("LOG: Starting the main script from directory "+path);
 
-
-            // pr = Runtime.getRuntime().exec(mainScript);
         } catch (IOException e)
 
         {
 
             System.err.println("Wrong script folder");
-            serverView.appendMessage("The script file doesn't exist in folder /Project ");
+            serverView.appendMessage("The script file doesn't exist in folder " + path);
             this.stop();
 
         }
@@ -79,16 +84,15 @@ public class ScriptThread implements Runnable {
             reader = new BufferedReader(new InputStreamReader(
                     pr.getInputStream()));
             String s;
-            try
 
-            {
-                while ((s = reader.readLine()) != null && running)
+            try {
+                while ((s = reader.readLine()) != null && running) {
                     serverView.appendMessage("Script output: " + s);
-            } catch (IOException e)
-
-            {
+                    //The program server.jar executed not from terminal
+                }
+            } catch (IOException e) {
                 this.stop();
-                this.serverView.appendMessage("Server is going down...");
+                this.serverView.appendMessage("Failed to read from the main.sh\nServer is going down...");
                 //e.printStackTrace();
             }
             try {

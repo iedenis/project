@@ -1,3 +1,6 @@
+import sun.plugin2.util.SystemUtil;
+
+import javax.swing.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -24,5 +27,11 @@ public class ServerMain {
         serverView.setSize(700, 500);
         serverView.setLocationRelativeTo(null);
         serverView.setVisible(true);
+
+        //Checking the OS, because the server can run only on the Linux Operating system
+        if(!System.getProperty("os.name").equals("Linux")){
+            JOptionPane.showMessageDialog(null,"This program can run only on GNU/Linux OS");
+            System.exit(0);
+        }
     }
 }

@@ -6,7 +6,7 @@ echo "LOG: number is $num"
 if [ $num -eq 0 ]; 
 	then  echo "LOG: number $1 not in database of stolen cars"
 exit 0
-		else echo "*****LOG: number $1 stolen!!!*****" 
+		else echo "***** Car with plate number $1 appears in the police DB as stolen!!!*****" 
 exit 1
 
 fi
