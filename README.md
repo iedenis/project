@@ -22,7 +22,7 @@ At the end of the process an email from the reporting system to the police is se
 - The application developed for Android smartphones only
 
 ### Installation
-The program doesn't require installation. 
+The program doesn't require installation. Open the Terminal and follow the steps.
 
 1) Clone the repository into your local repository by:
 ```sh
