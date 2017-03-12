@@ -33,9 +33,9 @@ And run the program
 java -jar server.jar
 ```
 ### The project uses the following open source libraries:
-1) OpenALPR - https://github.com/openalpr/openalpr 
-2) Itext  - https://github.com/itext/itextpdf
-3) Java Mail API https://java.net/projects/javamail/pages/Home
+- OpenALPR - https://github.com/openalpr/openalpr 
+- Itext  - https://github.com/itext/itextpdf
+- Java Mail API https://java.net/projects/javamail/pages/Home
 *******************
 Google static maps API https://developers.google.com/maps/documentation/static-maps/
 *****************
