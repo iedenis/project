@@ -18,7 +18,7 @@ ALPR system decodes the image and takes out the number of license plates. Then i
 
 At the end of the process an email from the reporting system to the police is sent by using an external library with Javax.mail open source.
 ### Requirements
-The server part could run only on GNU/Linux OS
+The server part can run only on GNU/Linux OS
 The application developed for Android smartphones only
 ### Installation
 The program doesn't require installation. Just go to .jar files folder
