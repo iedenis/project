@@ -11,16 +11,17 @@ import java.nio.file.Paths;
  */
 public class ScriptThread implements Runnable {
 
-    Path scriptPath = Paths.get(System.getProperty("user.dir")).getParent();
     private ServerView serverView;
     private ServerModel serverModel;
     private Process pr = null;
-    //private String[] mainScript = {"/home/fox/Project/main.sh"};
+    //private String[] mainScript = {"your_path_to_the_script/main.sh"}; could be use in case the different path of the script
     private BufferedReader reader;
     private boolean running;
+    private Path scriptPath = Paths.get(System.getProperty("user.dir")).getParent();
+
 
     /**
-     * Constructor for Script Thread
+     * Constructor for Script Thread class
      *
      * @param serverModel {@link ServerModel} Model object
      * @param serverView  {@link ServerView} The server GUI
@@ -57,6 +58,9 @@ public class ScriptThread implements Runnable {
     public void run() {
         running = true;
         String path = scriptPath.toString();
+
+        //Option to choose between European pattern and Israeli pattern. By default it is the european pattern
+        //because we have to continue training the ALPR program for better results.
         String options[] = {"European", "Israeli"};
         Object selected = JOptionPane.showInputDialog(null, "Choose the license plate pattern", "Selection", JOptionPane.DEFAULT_OPTION, null, options, "0");
         String selectedString = selected.toString();
@@ -72,6 +76,7 @@ public class ScriptThread implements Runnable {
 
         try {
             serverView.appendMessage("LOG: executed from directory: " + path);
+            //Creates a new process that runs the script with the chosen parameter (european or israeli pattern)
             ProcessBuilder builder = new ProcessBuilder(path + "/main.sh", selectedString);
             builder.redirectErrorStream(true);
             pr = builder.start();
@@ -99,6 +104,7 @@ public class ScriptThread implements Runnable {
                 }
             } catch (IOException e) {
                 this.stop();
+                System.err.println("Failed to read from the script");
                 this.serverView.appendMessage("Failed to read from the main.sh\nServer is going down...");
                 //e.printStackTrace();
             }

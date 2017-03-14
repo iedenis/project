@@ -2,26 +2,36 @@ import java.io.DataInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 /**
  * @author Denis Ievlev
  * @author Samer Hadeed
  */
 public class Channel implements Runnable {
+
     private Socket socket;
-    //private Scanner reader;
-    //private PrintWriter writer;
     private boolean running;
     private String name = null;
     private ServerModel serverModel;
     private ServerView serverView;
+    private Path pathToStore = Paths.get(System.getProperty("user.dir")).getParent();
 
+    /**
+     * Class constructor
+     *
+     * @param socket      user's socket
+     * @param serverModel {@link ServerModel} Model object
+     * @param serverView  {@link ServerView} View object
+     */
     public Channel(Socket socket, ServerModel serverModel, ServerView serverView) {
         this.socket = socket;
         this.serverModel = serverModel;
         this.serverView = serverView;
+        System.out.println("LOG: The image will be stored in "+pathToStore+"/images");
+
     }
 
     /**
@@ -38,7 +48,7 @@ public class Channel implements Runnable {
      *
      * @throws IOException when cannot close stream or current thread
      */
-    public void stop()  {
+    public void stop() {
         running = false;
 
         try {
@@ -49,12 +59,6 @@ public class Channel implements Runnable {
         }
     }
 
-    /*
-    public void send(String message) {
-        writer.println(message);
-        writer.flush();
-    }
-*/
     @Override
     public void run() {
         try {
@@ -68,7 +72,7 @@ public class Channel implements Runnable {
                 } catch (NoSuchElementException e) {
                     System.err.println(name + " channel has been closed");
                     e.getStackTrace();
-                    disconnectMessageRequest();
+                    //disconnectMessageRequest(); unimplemented feature
                     break;
                 }
             }
@@ -81,76 +85,43 @@ public class Channel implements Runnable {
         serverView.appendMessage("Receiving image...");
         int filesize = 10000000;
         long start = System.currentTimeMillis();
-        int bytesRead;
-        int current = 0;
-        byte[] mybytearray = new byte[filesize];
+        //int bytesRead;
+       // int current = 0;
+        //byte[] mybytearray = new byte[filesize];
         DataInputStream in = new DataInputStream(socket.getInputStream());
 
+        //TODO have to check the folder path
         // destination path and name of file
-        FileOutputStream fos = new FileOutputStream("/home/fox/images/image.jpg");
-        int i;
-        while ((i = in.read()) > -1) {
-            fos.write(i);
+        System.out.println("LOG: The image will be stored in "+pathToStore+"/images directory");
+        try (FileOutputStream fos = new FileOutputStream(pathToStore + "/images/image.jpg")) {
+
+            //  FileOutputStream fos = new FileOutputStream("path_to_store_image/image.jpg"); //for other folder
+            int i;
+            while ((i = in.read()) > -1) {
+                fos.write(i);
+            }
+            fos.close();
+            in.close();
         }
-        fos.close();
-        in.close();
         serverView.appendMessage("Image received and saved in /images folder");
     }
-
-
-
-/* accepting file code
-
-//Accept File
-            System.out.println("Connected");
-
-            //receive code
-            int filesize=450660;
-            int bytesRead;
-            int current=0;
-            // receive file
-            byte [] mybytearray  = new byte [filesize];
-            InputStream is = sock.getInputStream();
-            FileOutputStream fos = new FileOutputStream("C:\\Project Server\\Capture.png");
-            BufferedOutputStream bos = new BufferedOutputStream(fos);
-            bytesRead = is.read(mybytearray,0,mybytearray.length);
-            current = bytesRead;
-
-            do {
-               bytesRead =
-                  is.read(mybytearray, current, (mybytearray.length-current));
-               if(bytesRead >= 0) current += bytesRead;
-            } while(bytesRead > -1);
-
-            bos.write(mybytearray, 0 , current);
-            bos.flush();
-
-            System.out.println("end-start");
-        }
-        catch(Exception e)
-        {
-            System.out.println(e);
-            e.printStackTrace();
-        }
-
-    }
- */
-
 
     /**
      * Handles the received disconnecting message from client.<br>
      * Removes the user from online users list.
      */
 
+    @SuppressWarnings("unused")
+    /**
+     * The function is not in use.
+     */
     private void disconnectMessageRequest() {
         if (name != null) {
             serverModel.removeClient(name);
-            serverView.appendMessage("Client " + name + " left the chat\n");
+            serverView.appendMessage("Client " + name + " disconnected\n");
         }
 
         serverModel.removeChannel(this);
-        //sendUserNames();
-            stop();
-
+        stop();
     }
 }

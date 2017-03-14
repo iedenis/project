@@ -104,7 +104,6 @@ public class ServerController implements Runnable {
                 e.printStackTrace();
                 System.err.println("LOG: Failed to add socket");
             }
-
         }
     }
 
