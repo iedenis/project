@@ -57,18 +57,25 @@ public class ScriptThread implements Runnable {
     public void run() {
         running = true;
         String path = scriptPath.toString();
+        String options[] = {"European", "Israeli"};
+        Object selected = JOptionPane.showInputDialog(null, "Choose the license plate pattern", "Selection", JOptionPane.DEFAULT_OPTION, null, options, "0");
+        String selectedString = selected.toString();
+        System.out.println("User chose " + selected);
+
+        if (selectedString.equals(options[0])) selectedString = "eu";
+        else if (selectedString.equals(options[1])) selectedString = "il";
+        else this.stop(); //in case the user canceled
 
         //if executed with jar file located in /Project/jar_files
-
         if (!path.contains("/Project"))
             path = System.getProperty("user.dir").concat("/Project");
 
         try {
             serverView.appendMessage("LOG: executed from directory: " + path);
-            ProcessBuilder builder = new ProcessBuilder(path + "/main.sh");
+            ProcessBuilder builder = new ProcessBuilder(path + "/main.sh", selectedString);
             builder.redirectErrorStream(true);
             pr = builder.start();
-            serverView.appendMessage("LOG: Starting the main script from directory "+path);
+            serverView.appendMessage("LOG: Starting the main script from directory " + path);
 
         } catch (IOException e)
 
