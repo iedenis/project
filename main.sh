@@ -29,7 +29,7 @@ echo
 	${PARENTDIR}/./checkPNumber.sh ${stringArray[4]}
 if ! [ $? -eq 0 ]; then 
 echo "LOG: returned value $?"
-cd ${PARENTDIR}/jar_files && java -jar report.jar ${NEWFILE}
+cd ${PARENTDIR}/jar_files && java -jar reporting.jar ${NEWFILE}
 fi
 fi
 done
